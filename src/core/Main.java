@@ -3,8 +3,10 @@ package core;
 import helper.Error;
 
 import org.lwjgl.LWJGLException;
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
+import org.lwjgl.util.vector.Vector3f;
 
 import camera.Camera;
 
@@ -28,10 +30,10 @@ public class Main {
 
 	private void init() {
 		initDisplay();
-		// init gl
+		initGL();
 		// init vars
 	}
-	
+
 	private void initDisplay() {
 		try {
 			Display.setDisplayMode(new DisplayMode(Main.WIDTH, Main.HEIGHT));
@@ -40,6 +42,11 @@ public class Main {
 		} catch (LWJGLException e) {
 			new Error("COULD NOT INITIALIZE DISPLAY", "core", "Main", "initDisplay", e);
 		}
+	}
+
+	private void initGL() {
+		camera = new Camera(new Vector3f(0, 0, -10), 70.0f, (float) Main.WIDTH / Main.HEIGHT, 0.3f, 1000.0f);
+		Mouse.setGrabbed(true);
 	}
 
 	private void mainLoop() {
