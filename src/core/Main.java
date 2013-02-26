@@ -1,5 +1,9 @@
 package core;
 
+import org.lwjgl.LWJGLException;
+import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.DisplayMode;
+
 import camera.Camera;
 
 public class Main {
@@ -21,9 +25,22 @@ public class Main {
 	}
 
 	private void init() {
-		// init display
+		initDisplay();
 		// init gl
 		// init vars
+	}
+	
+	private void initDisplay() {
+		try {
+			Display.setDisplayMode(new DisplayMode(Main.WIDTH, Main.HEIGHT));
+			Display.create();
+			Display.setFullscreen(false);
+		} catch (LWJGLException e) {
+			System.out.println("COULD NOT INITIALIZE DISPLAY\n\n");
+			System.out.println("Package: core\nClass: Main\nMethod: initDisplay()\n\n");
+			System.out.println("*******************STACK TRACE*******************\n\n");
+			e.printStackTrace();
+		}
 	}
 
 	private void mainLoop() {
