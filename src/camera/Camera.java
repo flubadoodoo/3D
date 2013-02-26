@@ -4,8 +4,6 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.util.glu.GLU.gluPerspective;
 import helper.Point3D;
 
-import org.lwjgl.util.vector.Vector3f;
-
 public class Camera {
 	
 	private Point3D position; // the camera's position in 3D space
@@ -65,7 +63,7 @@ public class Camera {
 	 * Translate the camera in 3D space on a delta basis
 	 * @param displacement the vector by which the camera should be moved
 	 * */
-	public void move(Vector3f displacement) {
+	public void move(float distance, int direction) {
 		/*
 		 * Move the camera in the direction that you want based on the displacement vector. This utilizes the 
 		 * properties of the sin and cosine functions. To visualize what is happening, imagine a circle on the
@@ -74,8 +72,8 @@ public class Camera {
 		 *  So just get the individual components of that coordinate and add that to the camera's position. The Y
 		 *  component however works due to magic.
 		 * */
-		position.setX(position.getX() + displacement.getX() * (float) Math.sin(Math.toRadians(rotationY + 90)));
-		position.setZ(position.getZ() + displacement.getZ() * (float) Math.cos(Math.toRadians(rotationY + 90)));
+		position.setX(position.getX() + distance * (float) Math.cos(Math.toRadians(rotationY + 90 * direction)));
+		position.setZ(position.getZ() + distance * (float) Math.sin(Math.toRadians(rotationY + 90 * direction)));
 	}
 	
 	public void rotateBy(float addedRotationX, float addedRotationY, float addedRotationZ) {
