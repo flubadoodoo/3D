@@ -1,5 +1,6 @@
 package core;
 
+import helper.Clock;
 import helper.Error;
 
 import org.lwjgl.LWJGLException;
@@ -14,6 +15,9 @@ public class Main {
 	
 	private static final int WIDTH;
 	private static final int HEIGHT;
+	
+	private long lastFrameSystemTime;
+	private int deltaTimeFromLastFrame;
 	
 	private Camera camera;
 	
@@ -31,7 +35,7 @@ public class Main {
 	private void init() {
 		initDisplay();
 		initGL();
-		// init vars
+		initVars();
 	}
 
 	private void initDisplay() {
@@ -48,6 +52,15 @@ public class Main {
 		camera = new Camera(new Vector3f(0, 0, -10), 70.0f, (float) Main.WIDTH / Main.HEIGHT, 0.3f, 1000.0f);
 		Mouse.setGrabbed(true);
 	}
+	
+	private void initVars() {
+		initGLVars();
+	}
+	
+	private void initGLVars() {
+		lastFrameSystemTime = Clock.getTime();
+		deltaTimeFromLastFrame = 1;
+	}
 
 	private void mainLoop() {
 		// update scene
@@ -60,6 +73,13 @@ public class Main {
 	private void quitProgram() {
 		// destroy display
 		// System.exit(0);
+	}
+	
+	private int getDelta() {
+		long currentSystemTime = Clock.getTime();
+		int deltaTime = (int) (currentSystemTime - lastFrameSystemTime);
+		lastFrameSystemTime = currentSystemTime;
+		return deltaTime;
 	}
 
 }
