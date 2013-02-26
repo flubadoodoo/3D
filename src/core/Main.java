@@ -15,7 +15,28 @@ public class Main {
 	}
 	
 	public Main() {
-		
+		init();
+		mainLoop();
+		quitProgram();
+	}
+
+	private void init() {
+		// init display
+		// init gl
+		// init vars
+	}
+
+	private void mainLoop() {
+		// update scene
+		// render scene
+		// get input
+		// update display
+		// sync display
+	}
+	
+	private void quitProgram() {
+		// destroy display
+		// System.exit(0);
 	}
 
 }
