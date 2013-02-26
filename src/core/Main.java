@@ -19,6 +19,7 @@ public class Main {
 	private static final int HEIGHT; // height of the display
 	private static final int TARGET_FRAME_RATE; // the target frame rate of the program
 	private static final float MOVE_SPEED; // the speed at which the player (really the camera) moves
+	private static final float MOUSE_TURN_SPEED; // the sensitivity of the mouse
 	
 	private long lastFrameSystemTime; // the last frame's time according to the system	
 	
@@ -33,6 +34,7 @@ public class Main {
 		HEIGHT = 720;
 		TARGET_FRAME_RATE = 60;
 		MOVE_SPEED = 0.01f;
+		MOUSE_TURN_SPEED = 0.1f;
 	}
 	
 	/**
@@ -113,6 +115,7 @@ public class Main {
 		float xDistance = (Keyboard.isKeyDown(Keyboard.KEY_A) != Keyboard.isKeyDown(Keyboard.KEY_D) ? (Keyboard.isKeyDown(Keyboard.KEY_A)) ? -distance : distance : 0f);
 		float yDistance = (Keyboard.isKeyDown(Keyboard.KEY_W) != Keyboard.isKeyDown(Keyboard.KEY_S) ? (Keyboard.isKeyDown(Keyboard.KEY_W)) ? -distance : distance : 0f);
 		camera.move(new Vector3f(xDistance, 0f, yDistance));
+		camera.rotateBy(new Vector3f(-Mouse.getDX() * MOUSE_TURN_SPEED, Mouse.getDY() * MOUSE_TURN_SPEED, 0f));
 	}
 	
 	/**
