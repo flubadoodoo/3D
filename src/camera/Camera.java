@@ -29,6 +29,7 @@ public class Camera {
 		this.aspectRatio = aspectRatio;
 		this.nearClip = nearClip;
 		this.farClip = farClip;
+		rotation = new Vector3f(0f, 0f, 0f);
 		// Setup the OpenGL specifics of the camera
 		setupCameraProjection();
 	}

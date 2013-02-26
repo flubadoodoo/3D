@@ -8,6 +8,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
+import static org.lwjgl.opengl.GL11.*;
 import org.lwjgl.util.vector.Vector3f;
 
 import camera.Camera;
@@ -94,13 +95,23 @@ public class Main {
 	 * The main loop of the program
 	 * */
 	private void mainLoop() {
-		// update scene
-		// render scene
-		// get input
 		while (!Display.isCloseRequested() && !Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
+			// get input
+			// update scene
+			renderScene();
 			Display.update();
 			Display.sync(TARGET_FRAME_RATE);
 		}
+	}
+	
+	/**
+	 * Renders the scene
+	 * */
+	private void renderScene() {
+		deltaTimeFromLastFrame = getDelta();
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glLoadIdentity();
+		camera.updateCamera();
 	}
 	
 	/**
