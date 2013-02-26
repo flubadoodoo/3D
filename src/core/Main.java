@@ -4,6 +4,7 @@ import helper.Clock;
 import helper.Error;
 
 import org.lwjgl.LWJGLException;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
@@ -15,6 +16,7 @@ public class Main {
 	
 	private static final int WIDTH; // width of the display
 	private static final int HEIGHT; // height of the display
+	private static final int TARGET_FRAME_RATE; // the target frame rate of the program
 	
 	private long lastFrameSystemTime; // the last frame's time according to the system
 	private int deltaTimeFromLastFrame; // the change in time between the current time to the last frame's time
@@ -28,6 +30,7 @@ public class Main {
 		// initialize width and height
 		WIDTH = 1280;
 		HEIGHT = 720;
+		TARGET_FRAME_RATE = 60;
 	}
 	
 	/**
@@ -94,8 +97,10 @@ public class Main {
 		// update scene
 		// render scene
 		// get input
-		// update display
-		// sync display
+		while (!Display.isCloseRequested() && !Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
+			Display.update();
+			Display.sync(TARGET_FRAME_RATE);
+		}
 	}
 	
 	/**
