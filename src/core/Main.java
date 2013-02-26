@@ -1,5 +1,7 @@
 package core;
 
+import helper.Error;
+
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
@@ -36,10 +38,7 @@ public class Main {
 			Display.create();
 			Display.setFullscreen(false);
 		} catch (LWJGLException e) {
-			System.out.println("COULD NOT INITIALIZE DISPLAY\n\n");
-			System.out.println("Package: core\nClass: Main\nMethod: initDisplay()\n\n");
-			System.out.println("*******************STACK TRACE*******************\n\n");
-			e.printStackTrace();
+			new Error("COULD NOT INITIALIZE DISPLAY", "core", "Main", "initDisplay", e);
 		}
 	}
 
