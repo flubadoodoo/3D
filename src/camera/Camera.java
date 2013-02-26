@@ -65,12 +65,12 @@ public class Camera {
 		 * properties of the sin and cosine functions. To visualize what is happening, imagine a circle on the
 		 * screen, but the y-axis is replaced by a z-axis. The radius of the circle is given by the magnitude of
 		 * the displacement parameter. Any point on that circle has the form (magnitude * cosine(Θ), magnitude * sin(Θ)).
-		 *  So just get the individual components of that coordinate and add that to the camera's position. The Z
+		 *  So just get the individual components of that coordinate and add that to the camera's position. The Y
 		 *  component however works due to magic.
 		 * */
-		position.setX(position.getX() + displacement.getX() * (float) Math.cos(Math.toRadians(rotation.getY() + 90)));
-		position.setY(position.getY() + displacement.getY() * (float) Math.sin(Math.toRadians(rotation.getY() + 90)));
-		position.setZ(position.getZ() + displacement.getZ() * (float) Math.sin(Math.toRadians(rotation.getY() + 90)));
+		position.setX(position.getX() + displacement.getX() * (float) Math.sin(Math.toRadians(rotation.getY() + 0)));
+		//position.setY(position.getY() + displacement.getY() * (float) Math.sin(Math.toRadians(rotation.getY() + 90)));
+		position.setZ(position.getZ() + displacement.getZ() * (float) Math.cos(Math.toRadians(rotation.getY() + 0)));
 	}
 	
 	public void rotateBy(Vector3f addedRotation) {

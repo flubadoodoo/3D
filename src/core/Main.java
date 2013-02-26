@@ -33,7 +33,7 @@ public class Main {
 		WIDTH = 1280;
 		HEIGHT = 720;
 		TARGET_FRAME_RATE = 60;
-		MOVE_SPEED = 0.01f;
+		MOVE_SPEED = 0.1f;
 		MOUSE_TURN_SPEED = 0.1f;
 	}
 	
@@ -112,10 +112,15 @@ public class Main {
 	 * */
 	private void pollInput(int delta) {
 		float distance = MOVE_SPEED * delta;
-		float xDistance = (Keyboard.isKeyDown(Keyboard.KEY_A) != Keyboard.isKeyDown(Keyboard.KEY_D) ? (Keyboard.isKeyDown(Keyboard.KEY_A)) ? -distance : distance : 0f);
-		float yDistance = (Keyboard.isKeyDown(Keyboard.KEY_W) != Keyboard.isKeyDown(Keyboard.KEY_S) ? (Keyboard.isKeyDown(Keyboard.KEY_W)) ? -distance : distance : 0f);
-		camera.move(new Vector3f(xDistance, 0f, yDistance));
-		camera.rotateBy(new Vector3f(-Mouse.getDX() * MOUSE_TURN_SPEED, Mouse.getDY() * MOUSE_TURN_SPEED, 0f));
+		if (Keyboard.isKeyDown(Keyboard.KEY_W))
+			camera.move(new Vector3f(0f, 0f, distance)); // z distance is negative because of right hand rule
+		if (Keyboard.isKeyDown(Keyboard.KEY_A))
+			camera.move(new Vector3f(distance, 0f, 0f));
+		if (Keyboard.isKeyDown(Keyboard.KEY_S))
+			camera.move(new Vector3f(0f, 0f, -distance));
+		if (Keyboard.isKeyDown(Keyboard.KEY_D))
+			camera.move(new Vector3f(-distance, 0f, 0f));
+		camera.rotateBy(new Vector3f(-Mouse.getDY() * MOUSE_TURN_SPEED, Mouse.getDX() * MOUSE_TURN_SPEED, 0f));
 	}
 	
 	/**
