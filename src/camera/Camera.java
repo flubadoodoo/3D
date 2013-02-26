@@ -41,6 +41,8 @@ public class Camera {
 		glMatrixMode (GL_PROJECTION); // what
 		glLoadIdentity(); // what
 		gluPerspective(fieldOfView, aspectRatio, nearClip, farClip); // k
+		glMatrixMode(GL_MODELVIEW); // very good
+		glEnable(GL_DEPTH_TEST); // Aright
 	}
 	
 	/**
