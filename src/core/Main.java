@@ -2,6 +2,7 @@ package core;
 
 import helper.Clock;
 import helper.Error;
+import helper.Point3D;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
@@ -75,7 +76,7 @@ public class Main {
 	 * Initialize the camera and grab the mouse
 	 * */
 	private void initGL() {
-		camera = new Camera(new Vector3f(0, 0, -10), 70.0f, (float) Main.WIDTH / (float) Main.HEIGHT, 0.3f, 1000.0f);
+		camera = new Camera(new Point3D(0f, 0f, -10.0f), 70.0f, (float) Main.WIDTH / (float) Main.HEIGHT, 0.3f, 1000.0f);
 		Mouse.setGrabbed(true);
 	}
 	
@@ -120,7 +121,7 @@ public class Main {
 			camera.move(new Vector3f(0f, 0f, -distance));
 		if (Keyboard.isKeyDown(Keyboard.KEY_D))
 			camera.move(new Vector3f(-distance, 0f, 0f));
-		camera.rotateBy(new Vector3f(-Mouse.getDY() * MOUSE_TURN_SPEED, Mouse.getDX() * MOUSE_TURN_SPEED, 0f));
+		camera.rotateBy(-Mouse.getDY() * MOUSE_TURN_SPEED, Mouse.getDX() * MOUSE_TURN_SPEED, 0f);
 	}
 	
 	/**

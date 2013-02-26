@@ -2,13 +2,16 @@ package camera;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.util.glu.GLU.gluPerspective;
+import helper.Point3D;
 
 import org.lwjgl.util.vector.Vector3f;
 
 public class Camera {
 	
-	private Vector3f position; // the camera's position in 3D space
-	private Vector3f rotation; // the camera's rotation in 3D space in degrees
+	private Point3D position; // the camera's position in 3D space
+	private float rotationX; // the camera's x rotation
+	private float rotationY; // the camera's y rotation
+	private float rotationZ; // the camera's z rotation
 	private float fieldOfView; // the camera's field of view
 	private float aspectRatio; // the camera's aspect ratio
 	private float nearClip; // the camera's near clipping plane distance
@@ -22,15 +25,18 @@ public class Camera {
 	 * @param nearClip the distance to the camera's near clipping plane
 	 * @param farClip the distance to the camera's far clipping plane
 	 * */
-	public Camera (Vector3f position, float fieldOfView, float aspectRatio, float nearClip, float farClip) {
-		// Initialize variables
+	public Camera (Point3D position, float fieldOfView, float aspectRatio, float nearClip, float farClip) {
+		// initialize variables
 		this.position = position;
 		this.fieldOfView = fieldOfView;
 		this.aspectRatio = aspectRatio;
 		this.nearClip = nearClip;
 		this.farClip = farClip;
-		rotation = new Vector3f(0f, 0f, 0f);
-		// Setup the OpenGL specifics of the camera
+		// initialize rotation
+		rotationX = 0f;
+		rotationY = 0f;
+		rotationZ = 0f;
+		// setup the OpenGL specifics of the camera
 		setupCameraProjection();
 	}
 
@@ -49,9 +55,9 @@ public class Camera {
 	 * Update the camera's rotation on each axis, as well as move the camera to its position
 	 * */
 	public void updateCamera() {
-		glRotatef(rotation.getX(), 1f, 0f, 0f);
-		glRotatef(rotation.getY(), 0f, 1f, 0f);
-		glRotatef(rotation.getZ(), 0f, 0f, 1f);
+		glRotatef(rotationX, 1f, 0f, 0f);
+		glRotatef(rotationY, 0f, 1f, 0f);
+		glRotatef(rotationZ, 0f, 0f, 1f);
 		glTranslatef(position.getX(), position.getY(), position.getZ());
 	}
 	
@@ -68,41 +74,71 @@ public class Camera {
 		 *  So just get the individual components of that coordinate and add that to the camera's position. The Y
 		 *  component however works due to magic.
 		 * */
-		position.setX(position.getX() + displacement.getX() * (float) Math.sin(Math.toRadians(rotation.getY() + 0)));
-		//position.setY(position.getY() + displacement.getY() * (float) Math.sin(Math.toRadians(rotation.getY() + 90)));
-		position.setZ(position.getZ() + displacement.getZ() * (float) Math.cos(Math.toRadians(rotation.getY() + 0)));
+		position.setX(position.getX() + displacement.getX() * (float) Math.sin(Math.toRadians(rotationY + 90)));
+		position.setZ(position.getZ() + displacement.getZ() * (float) Math.cos(Math.toRadians(rotationY + 90)));
 	}
 	
-	public void rotateBy(Vector3f addedRotation) {
-		rotation.set(rotation.getX() + addedRotation.getX(), rotation.getY() + addedRotation.getY(), rotation.getZ() + addedRotation.getZ());
+	public void rotateBy(float addedRotationX, float addedRotationY, float addedRotationZ) {
+		rotationX += addedRotationX;
+		rotationY += addedRotationY;
+		rotationZ += addedRotationZ;
 	}
 
 	/**
 	 * @return the position
 	 */
-	public Vector3f getPosition() {
+	public Point3D getPosition() {
 		return position;
 	}
 
 	/**
 	 * @param position the position to set
 	 */
-	public void setPosition(Vector3f position) {
+	public void setPosition(Point3D position) {
 		this.position = position;
 	}
+	
 
 	/**
-	 * @return the rotation
+	 * @return the rotationX
 	 */
-	public Vector3f getRotation() {
-		return rotation;
+	public float getRotationX() {
+		return rotationX;
 	}
 
 	/**
-	 * @param rotation the rotation to set
+	 * @param rotationX the rotationX to set
 	 */
-	public void setRotation(Vector3f rotation) {
-		this.rotation = rotation;
+	public void setRotationX(float rotationX) {
+		this.rotationX = rotationX;
+	}
+
+	/**
+	 * @return the rotationY
+	 */
+	public float getRotationY() {
+		return rotationY;
+	}
+
+	/**
+	 * @param rotationY the rotationY to set
+	 */
+	public void setRotationY(float rotationY) {
+		this.rotationY = rotationY;
+	}
+
+	/**
+	 * @return the rotationZ
+	 */
+	public float getRotationZ() {
+		return rotationZ;
+	}
+
+	/**
+	 * @param rotationZ the rotationZ to set
+	 */
+	public void setRotationZ(float rotationZ) {
+		this.rotationZ = rotationZ;
 	}
 
 	/**
