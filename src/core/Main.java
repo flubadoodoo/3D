@@ -9,6 +9,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
+
 import static org.lwjgl.opengl.GL11.*;
 
 import camera.Camera;
@@ -27,7 +28,7 @@ public class Main {
 										// system
 
 	private Camera camera; // a class to encapsulate all camera functionality
-
+	
 	/**
 	 * Initialize static variables that need to be initialized before the
 	 * constructor
@@ -69,14 +70,7 @@ public class Main {
 	private void initDisplay() {
 		try {
 			// Set the DisplayMode according to WIDTH and HEIGHT
-			Display.setDisplayMode(new DisplayMode(Main.WIDTH, Main.HEIGHT)); // Set
-																				// the
-																				// display's
-																				// dimensions
-																				// to
-																				// WIDTH
-																				// x
-																				// HEIGHT
+			Display.setDisplayMode(new DisplayMode(Main.WIDTH, Main.HEIGHT)); // Set the display's dimensions to WIDTH x HEIGHT
 			Display.create(); // Create the display
 			Display.setFullscreen(false); // We do not want full screen
 		} catch (LWJGLException e) { // Throws LWJGLException
@@ -141,6 +135,10 @@ public class Main {
 			camera.move(-distance, 1);
 		if (Keyboard.isKeyDown(Keyboard.KEY_D))
 			camera.move(-distance, 0);
+		if (Keyboard.isKeyDown(Keyboard.KEY_SPACE))
+			camera.move(distance, 2);
+		if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT))
+			camera.move(-distance, 2);
 		camera.rotateBy(-Mouse.getDY() * MOUSE_TURN_SPEED, Mouse.getDX()
 				* MOUSE_TURN_SPEED, 0f);
 	}
@@ -152,62 +150,10 @@ public class Main {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glLoadIdentity();
 		camera.updateCamera();
-		glBegin(GL_QUADS);
-		{
-			for (int i = 0; i < 3; i++) {
-				for (int j = 0; j < 3; j++) {
-					for (int k = 0; k < 3; k++) {
-						drawCube(i, j, k);
-					}
-				}
-			}
+		glBegin(GL_QUADS); {
+			
 		}
 		glEnd();
-	}
-
-	private void drawCube(float x, float y, float z) {
-		float color = (float) Math.random();
-		// FrontFace
-		glColor3f(color, 0f, 0f);
-		glVertex3f(-1 + x, -1 + y, 1 + z);
-		glVertex3f(1 + x, -1 + y, 1 + z);
-		glVertex3f(1 + x, 1 + y, 1 + z);
-		glVertex3f(-1 + x, 1 + y, 1 + z);
-
-		// BackFace
-		glColor3f(0f, color, 0f);
-		glVertex3f(-1 + x, -1 + y, -1 + z);
-		glVertex3f(-1 + x, 1 + y, -1 + z);
-		glVertex3f(1 + x, 1 + y, -1 + z);
-		glVertex3f(1 + x, -1 + y, -1 + z);
-
-		// BottomFace
-		glColor3f(0f, 0f, color);
-		glVertex3f(-1 + x, -1 + y, -1 + z);
-		glVertex3f(-1 + x, -1 + y, 1 + z);
-		glVertex3f(-1 + x, 1 + y, 1 + z);
-		glVertex3f(-1 + x, 1 + y, -1 + z);
-
-		// TopFace
-		glColor3f(0.5f, color, 0.5f);
-		glVertex3f(1 + x, -1 + y, -1 + z);
-		glVertex3f(1 + x, -1 + y, 1 + z);
-		glVertex3f(1 + x, 1 + y, 1 + z);
-		glVertex3f(1 + x, 1 + y, -1 + z);
-
-		// LeftFace
-		glColor3f(color, 0.5f, 0.5f);
-		glVertex3f(-1 + x, -1 + y, -1 + z);
-		glVertex3f(1 + x, -1 + y, -1 + z);
-		glVertex3f(1 + x, -1 + y, 1 + z);
-		glVertex3f(-1 + x, -1 + y, 1 + z);
-
-		// Right Face
-		glColor3f(0.5f, 0.5f, color);
-		glVertex3f(-1 + x, 1 + y, -1 + z);
-		glVertex3f(1 + x, 1 + y, -1 + z);
-		glVertex3f(1 + x, 1 + y, 1 + z);
-		glVertex3f(-1 + x, 1 + y, 1 + z);
 	}
 
 	/**

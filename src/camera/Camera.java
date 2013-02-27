@@ -72,6 +72,10 @@ public class Camera {
 		 *  So just get the individual components of that coordinate and add that to the camera's position. The Y
 		 *  component however works due to magic.
 		 * */
+		if (direction == 2) {
+			position.setY(position.getY() + distance);
+			return;
+		}
 		position.setX(position.getX() + distance * (float) Math.cos(Math.toRadians(rotationY + 90 * direction)));
 		position.setZ(position.getZ() + distance * (float) Math.sin(Math.toRadians(rotationY + 90 * direction)));
 	}
